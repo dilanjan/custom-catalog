@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Dilanjan_CustomCatalog::custom_catalog_view" title="CustomCatalog" translate="title" module="Dilanjan_CustomCatalog" action="customcatalog/view/" resource="Dilanjan_CustomCatalog::custom_catalog" parent="Magento_Catalog::inventory" sortOrder="50"/>
+    </menu>
+</config>
