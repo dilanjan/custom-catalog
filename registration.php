@@ -6,8 +6,10 @@
  * Time: 3:43 PM
  */
 
-\Magento\Framework\Component\ComponentRegistrar::register(
-    \Magento\Framework\Component\ComponentRegistrar::MODULE,
+use Magento\Framework\Component\ComponentRegistrar;
+
+ComponentRegistrar::register(
+    ComponentRegistrar::MODULE,
     'Dilanjan_CustomCatalog',
     __DIR__
 );
