@@ -96,7 +96,7 @@ class InstallCatalogAttributes implements DataPatchInterface
     public function apply()
     {
         $eavSetup = $this->eavSetupFactory->create(['setup' => $this->moduleDataSetup]);
-
+        $eavSetup->removeAttribute(Product::ENTITY, 'vpn');
         $eavSetup->addAttribute(
             Product::ENTITY,
             'vpn',
@@ -112,8 +112,12 @@ class InstallCatalogAttributes implements DataPatchInterface
                 'apply_to' => '',
                 'group' => self::ATTRIBUTE_GROUP_NAME,
                 'note' => 'Vendor Product Number',
+                'is_used_in_grid' => true,
+                'is_visible_in_grid' => true,
+                'is_filterable_in_grid' => true,
             ]
         );
+        $eavSetup->removeAttribute(Product::ENTITY, 'copy_write_information');
 
         $eavSetup->addAttribute(
             Product::ENTITY,
@@ -137,9 +141,9 @@ class InstallCatalogAttributes implements DataPatchInterface
                 'used_in_product_listing' => true,
                 'global' => Attribute::SCOPE_STORE,
                 'apply_to' => '',
-                'is_used_in_grid' => false,
-                'is_visible_in_grid' => false,
-                'is_filterable_in_grid' => false,
+                'is_used_in_grid' => true,
+                'is_visible_in_grid' => true,
+                'is_filterable_in_grid' => true,
                 'group' => self::ATTRIBUTE_GROUP_NAME,
                 'note' => 'Copy Write Information',
             ]
