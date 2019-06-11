@@ -45,7 +45,14 @@ class AddVpnFieldToCollection implements AddFieldToCollectionInterface
      */
     public function addField(Collection $collection, $field, $alias = null)
     {
-        $attributeId = $this->eavAttribute->getIdByCode(Product::ENTITY, 'vpn');
-        $collection->joinField('vpn', 'catalog_product_entity_varchar', 'vpn', 'product_id=entity_id', null, 'left');
+//        $attributeId = $this->eavAttribute->getIdByCode(Product::ENTITY, 'vpn');
+//        $collection->joinField(
+//            'vpn',
+//            'catalog_product_entity_varchar',
+//            'vpn',
+//            'product_id=entity_id',
+//            'attribute_id='.$attributeId,
+//            'left'
+//        );
     }
 }

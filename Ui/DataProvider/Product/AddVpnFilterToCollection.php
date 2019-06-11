@@ -29,9 +29,9 @@ class AddVpnFilterToCollection implements AddFilterToCollectionInterface
      */
     public function addFilter(Collection $collection, $field, $condition = null)
     {
-        if (isset($condition['eq'])) {
-            $collection->addFieldToFilter($field, $condition);
-        }
+//        if (isset($condition['eq'])) {
+//            $collection->addFieldToFilter($field, $condition);
+//        }
     }
 }
 
