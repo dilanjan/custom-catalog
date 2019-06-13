@@ -96,7 +96,7 @@ class InstallCatalogAttributes implements DataPatchInterface
     public function apply()
     {
         $eavSetup = $this->eavSetupFactory->create(['setup' => $this->moduleDataSetup]);
-
+        $eavSetup->removeAttribute(Product::ENTITY, 'vpn');
         $eavSetup->addAttribute(
             Product::ENTITY,
             'vpn',
@@ -117,6 +117,7 @@ class InstallCatalogAttributes implements DataPatchInterface
                 'is_filterable_in_grid' => false,
             ]
         );
+        $eavSetup->removeAttribute(Product::ENTITY, 'copy_write_information');
 
         $eavSetup->addAttribute(
             Product::ENTITY,
