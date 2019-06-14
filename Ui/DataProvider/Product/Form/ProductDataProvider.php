@@ -45,6 +45,7 @@ class ProductDataProvider extends AbstractDataProvider
     /**
      * {@inheritdoc}
      * @since 101.0.0
+     * @throws \Magento\Framework\Exception\LocalizedException
      */
     public function getData()
     {
@@ -59,6 +60,7 @@ class ProductDataProvider extends AbstractDataProvider
     /**
      * {@inheritdoc}
      * @since 101.0.0
+     * @throws \Magento\Framework\Exception\LocalizedException
      */
     public function getMeta()
     {

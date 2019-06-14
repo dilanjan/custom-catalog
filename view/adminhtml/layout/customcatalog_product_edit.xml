@@ -1,25 +1,18 @@
 <?xml version="1.0"?>
-<!--
-/**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
- */
--->
-<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="admin-1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
-    <update handle="customcatalog_product_new"/>
-    <update handle="styles"/>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="admin-2columns-left" xsi:noNamespaceSchemaLocation="../../../../../../../lib/internal/Magento/Framework/View/Layout/etc/page_configuration.xsd">
+    <update handle="editor"/>
     <body>
-        <referenceBlock name="page.title">
-            <action method="setTitleClass">
-                <argument name="class" xsi:type="string">complex</argument>
-            </action>
-        </referenceBlock>
-        <referenceContainer name="page.main.actions">
-            <block class="Magento\Backend\Block\Store\Switcher" name="store_switcher">
-                <action method="setUseConfirm">
-                    <argument name="params" xsi:type="string">1</argument>
+        <referenceContainer name="left">
+            <block class="Dilanjan\CustomCatalog\Block\Adminhtml\Product\Edit\Tabs" name="customcatalog_product_edit_tabs">
+                <block class="Dilanjan\CustomCatalog\Block\Adminhtml\Product\Edit\Tab\EditInfo" name="customcatalog_product_edit_tab_main"/>
+                <action method="addTab">
+                    <argument name="name" xsi:type="string">main_section</argument>
+                    <argument name="block" xsi:type="string">customcatalog_product_edit_tab_main</argument>
                 </action>
             </block>
+        </referenceContainer>
+        <referenceContainer name="content">
+            <block class="Dilanjan\CustomCatalog\Block\Adminhtml\Product\Edit" name="customcatalog_product_edit"/>
         </referenceContainer>
     </body>
 </page>

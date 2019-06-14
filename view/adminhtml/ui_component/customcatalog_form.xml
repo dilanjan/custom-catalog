@@ -14,16 +14,6 @@
         <item name="template" xsi:type="string">templates/form/collapsible</item>
         <item name="childrenFromMeta" xsi:type="boolean">true</item>
     </argument>
-    <settings>
-        <reloadItem>product-details.attribute_set_id:value</reloadItem>
-        <buttons>
-            <button name="save" class="Dilanjan\CustomCatalog\Block\Adminhtml\Product\Edit\Button\Save"/>
-            <button name="back" class="Dilanjan\CustomCatalog\Block\Adminhtml\Product\Edit\Button\Back"/>
-        </buttons>
-        <deps>
-            <dep>customcatalog_form.product_form_data_source</dep>
-        </deps>
-    </settings>
     <dataSource name="product_form_data_source">
         <argument name="data" xsi:type="array">
             <item name="js_config" xsi:type="array">

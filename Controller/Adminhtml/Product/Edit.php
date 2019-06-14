@@ -1,45 +1,72 @@
 <?php
-/**
- *
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
- */
 namespace Dilanjan\CustomCatalog\Controller\Adminhtml\Product;
 
-use Magento\Framework\App\Action\HttpGetActionInterface as HttpGetActionInterface;
+use Dilanjan\CustomCatalog\Controller\Adminhtml\CustomCatalog;
+use Magento\Backend\App\Action\Context;
+use Magento\Framework\App\Response\Http\FileFactory;
+use Magento\Framework\Registry;
+use Magento\Framework\View\LayoutFactory;
+use Magento\Framework\View\Result\LayoutFactory as ResultLayoutFactory;
+use Magento\Framework\View\Result\PageFactory;
 
-class Edit extends \Magento\Catalog\Controller\Adminhtml\Product implements HttpGetActionInterface
+/**
+ * Class Edit
+ * @package Dilanjan\CustomCatalog\Controller\Adminhtml\Product
+ */
+class Edit extends CustomCatalog
 {
     /**
-     * Array of actions which can be processed without secret key validation
-     *
-     * @var array
+     * @var Session
      */
-    protected $_publicActions = ['edit'];
+    private $session;
 
     /**
-     * @var \Magento\Framework\View\Result\PageFactory
+     * @var \Magento\Catalog\Controller\Adminhtml\Product\Builder
      */
-    protected $resultPageFactory;
+    protected $productBuilder;
+    /**
+     * @var Registry
+     */
+    private $coreRegistry;
 
     /**
-     * @param \Magento\Backend\App\Action\Context $context
+     * Edit constructor.
+     * @param Context $context
+     * @param Registry $coreRegistry
+     * @param FileFactory $fileFactory
+     * @param LayoutFactory $layoutFactory
+     * @param ResultLayoutFactory $resultLayoutFactory
+     * @param PageFactory $resultPageFactory
      * @param \Magento\Catalog\Controller\Adminhtml\Product\Builder $productBuilder
-     * @param \Magento\Framework\View\Result\PageFactory $resultPageFactory
+     * @param \Magento\Backend\Model\Session $session
      */
     public function __construct(
-        \Magento\Backend\App\Action\Context $context,
+        Context $context,
+        Registry $coreRegistry,
+        FileFactory $fileFactory,
+        LayoutFactory $layoutFactory,
+        ResultLayoutFactory $resultLayoutFactory,
+        PageFactory $resultPageFactory,
         \Magento\Catalog\Controller\Adminhtml\Product\Builder $productBuilder,
-        \Magento\Framework\View\Result\PageFactory $resultPageFactory
+        \Magento\Backend\Model\Session $session
     ) {
-        parent::__construct($context, $productBuilder);
-        $this->resultPageFactory = $resultPageFactory;
+        parent::__construct(
+            $context,
+            $coreRegistry,
+            $fileFactory,
+            $layoutFactory,
+            $resultLayoutFactory,
+            $resultPageFactory
+        );
+        $this->session = $session;
+        $this->productBuilder = $productBuilder;
+        $this->coreRegistry = $coreRegistry;
     }
 
     /**
-     * Product edit form
-     *
-     * @return \Magento\Framework\Controller\ResultInterface
+     * @return \Magento\Backend\Model\View\Result\Page|\Magento\Backend\Model\View\Result\Redirect|\Magento\Framework\App\ResponseInterface|\Magento\Framework\Controller\ResultInterface
+     * @throws \Magento\Framework\Exception\LocalizedException
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
     public function execute()
     {
@@ -55,12 +82,12 @@ class Edit extends \Magento\Catalog\Controller\Adminhtml\Product implements Http
             /** @var \Magento\Backend\Model\View\Result\Redirect $resultRedirect */
             $resultRedirect = $this->resultRedirectFactory->create();
             $this->messageManager->addErrorMessage(__('This product doesn\'t exist.'));
-            return $resultRedirect->setPath('catalog/*/');
+            return $resultRedirect->setPath('customcatalog/*/');
         } elseif ($productId === 0) {
             /** @var \Magento\Backend\Model\View\Result\Redirect $resultRedirect */
             $resultRedirect = $this->resultRedirectFactory->create();
             $this->messageManager->addErrorMessage(__('Invalid product id. Should be numeric value greater than 0'));
-            return $resultRedirect->setPath('catalog/*/');
+            return $resultRedirect->setPath('customcatalog/*/');
         }
 
         $this->_eventManager->dispatch('catalog_product_edit_action', ['product' => $product]);
@@ -80,12 +107,17 @@ class Edit extends \Magento\Catalog\Controller\Adminhtml\Product implements Http
                 ->setWebsiteIds($product->getWebsiteIds())
                 ->setSwitchUrl(
                     $this->getUrl(
-                        'catalog/*/*',
+                        'customcatalog/*/*',
                         ['_current' => true, 'active_tab' => null, 'tab' => null, 'store' => null]
                     )
                 );
         }
 
         return $resultPage;
+    }
+
+    protected function _isAllowed()
+    {
+        return $this->_authorization->isAllowed('Dilanjan_CustomCatalog::custom_catalog');
     }
 }
